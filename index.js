@@ -1,9 +1,10 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
+const api = require('octonode');
 
 
 async function getPullRequests() {
-  const client = github.client(process.env.GITHUB_TOKEN);
+  const client = api.client(process.env.GITHUB_TOKEN);
   const repo = client.repo(github.context.payload.repository.full_name);
   const result = await repo.prsAsync({ per_page: 100, state: "open" });
   return result[0];
